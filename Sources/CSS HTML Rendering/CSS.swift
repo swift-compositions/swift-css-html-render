@@ -35,21 +35,21 @@ public enum CSS {
         @inlinable
         public static func buildBlock<each Content>(
             _ content: repeat each Content
-        ) -> Render._Tuple<repeat each Content> {
-            Render._Tuple(repeat each content)
+        ) -> Renderer.Document._Tuple<repeat each Content> {
+            Renderer.Document._Tuple(repeat each content)
         }
 
         @inlinable
         public static func buildEither<First, Second>(
             first component: First
-        ) -> Render.Conditional<First, Second> {
+        ) -> Renderer.Document.Conditional<First, Second> {
             .first(component)
         }
 
         @inlinable
         public static func buildEither<First, Second>(
             second component: Second
-        ) -> Render.Conditional<First, Second> {
+        ) -> Renderer.Document.Conditional<First, Second> {
             .second(component)
         }
 
