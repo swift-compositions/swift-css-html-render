@@ -16,8 +16,7 @@ extension `Snapshot Tests` {
         }
 
         @Test
-        func `HTML element renders with nil string-based inline style producing no output`() throws
-        {
+        func `HTML element renders with nil string-based inline style producing no output`() throws {
             snapshot(
                 as: .html
             ) {
