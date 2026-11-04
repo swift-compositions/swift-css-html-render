@@ -1,82 +1,13 @@
 # swift-css-html-render
 
-![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+Use this package when you style HTML views from Swift and want each CSS property to take only the values its W3C module allows. Call `.css` on any `HTML.View` to get an `HTML.CSS<Base>`, then chain property methods on it. For stacks, spacers and grids use swift-css-html-layout-render. For themes and light and dark color pairs use swift-css. For the whole HTML stack in one import use swift-html.
 
-Applies typed CSS properties to HTML views through a fluent `.css` namespace.
+## Laws
 
-> SwiftUI-style layout views (`HStack`, `VStack`, `Spacer`, lazy grid) live in the sibling `swift-css-html-layout-render` package. Consumers reach them transparently via `import HTML`.
-
----
-
-## Key Features
-
-- **Typed property modifiers** — each CSS property is a method that takes the value type from its W3C module (`.width(.px(200))`, `.display(.flex)`, `.alignItems(.center)`), so unsupported values are rejected at compile time.
-- **Fluent `.css` namespace** — `.css` on any `HTML.View` opens a namespace you chain within without repeating the accessor.
-- **Composes as an `HTML.View`** — `HTML.CSS` itself conforms to `HTML.View`, so styled output drops into any HTML builder with no unwrapping.
-- **Result-builder integration** — `@CSS.Builder` and the `cssBuilder { }` function produce `HTML.CSS<some HTML.View>` for conditional styling.
-- **Inline-style escape hatch** — `.inlineStyle("grid-template-columns", "1fr 1fr 1fr")` covers properties without a typed modifier.
-
----
-
-## Quick Start
-
-```swift
-import CSS_HTML_Rendering
-
-// Open the `.css` namespace on any HTML view, then chain typed CSS
-// properties — each modifier takes the value type from its W3C module.
-let card = ContentDivision { }
-    .css
-    .display(.flex)
-    .flexDirection(.column)
-    .alignItems(.center)
-    .padding(.px(16))
-    .backgroundColor(.color(.named(.white)))
-    .color(.named(.black))
-```
-
----
-
-## Installation
-
-```swift
-dependencies: [
-    .package(url: "https://github.com/swift-compositions/swift-css-html-render.git", branch: "main")
-]
-```
-
-```swift
-.target(
-    name: "YourTarget",
-    dependencies: [
-        .product(name: "CSS HTML Rendering", package: "swift-css-html-render"),
-    ]
-)
-```
-
-Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26.
-
----
-
-## Architecture
-
-Two library products: the rendering module and a test-support module.
-
-| Product | Target | Purpose |
-|---------|--------|---------|
-| `CSS HTML Rendering` | `Sources/CSS HTML Rendering/` | The `.css` accessor and `HTML.CSS<Base>` wrapper, the typed property modifiers, and the `CSS.Builder` result builder and `cssBuilder` function. |
-| `CSS HTML Rendering Test Support` | `Tests/Support/` | Re-exports the rendering module for test consumers. |
-
-The module name is `CSS_HTML_Rendering` once imported. Property values come from the W3C CSS modules in `CSS Standard`; the HTML view types come from `HTML Rendering`.
-
----
-
-## Community
-
-<!-- BEGIN: discussion -->
-*Discussion thread will be created at first public release.*
-<!-- END: discussion -->
-
-## License
-
-Apache 2.0. See [LICENSE](LICENSE.md).
+- `.css` on its own changes nothing. An `HTML.CSS<Base>` renders exactly as its base view.
+- Each property method adds one declaration, written as `name:value` with no space. Passing nil adds nothing and leaves the other declarations in the chain as they were.
+- Rendered in an `HTML.Document`, the declarations end up in the document's `<style>` element.
+- `HTML.CSS.inlineStyle(_:_:)` writes its name and value as given, without checking them. A nil value adds nothing.
+- `HTML.View.inlineStyle(_:_:)` with a property type and a global keyword, such as `inherit`, writes that keyword as the property's value.
+- The media modifiers, such as `HTML.CSS.dark(_:)` and `HTML.CSS.print(_:)`, the pseudo-class modifiers, such as `HTML.CSS.hover(_:)`, and `HTML.CSS.selector(_:_:)` apply to the declarations made inside their closure. A modifier inside another adds to the enclosing context instead of replacing it.
+- The forms of `dark`, `light`, `hover`, `focus` and `active` that take a property value repeat the property set just before them, with that value, under the new condition. So setting a background color and then calling `dark` with another one gives the first color normally and the second in dark mode.
