@@ -5,7 +5,9 @@ import Testing
 
 @Suite
 struct `Unit Tests` {
+}
 
+extension `Unit Tests` {
     @Suite
     struct `CSS Accessor` {
         @Test
@@ -201,59 +203,63 @@ struct `Unit Tests` {
     }
 }
 
-@Suite
-struct `Edge Case Tests` {
+enum `CSSHTMLRendering Tests` {}
 
-    @Test
-    func `deeply chained properties compile and render`() throws {
-        let html = try String(
-            HTML.Document {
-                tag("div").css
-                    .display(.flex)
-                    .flexDirection(.row)
-                    .justifyContent(.center)
-                    .alignItems(.center)
-                    .backgroundColor(.color(.named(.white)))
-                    .color(.named(.black))
-                    .padding(.px(16))
-                    .margin(.px(0))
-            }
-        )
-        #expect(html.contains("<div"))
-        #expect(html.contains("display"))
-        #expect(html.contains("flex-direction"))
-        #expect(html.contains("justify-content"))
-        #expect(html.contains("align-items"))
-    }
+extension `CSSHTMLRendering Tests` {
+    @Suite
+    struct `Edge Case Tests` {
 
-    @Test
-    func `css on content-bearing element preserves content`() throws {
-        let html = try String(
-            HTML.Document {
-                tag("div") { tag("span") }.css
-                    .backgroundColor(.color(.named(.red)))
-            }
-        )
-        #expect(html.contains("<span"))
-        #expect(html.contains("<div"))
-    }
+        @Test
+        func `deeply chained properties compile and render`() throws {
+            let html = try String(
+                HTML.Document {
+                    tag("div").css
+                        .display(.flex)
+                        .flexDirection(.row)
+                        .justifyContent(.center)
+                        .alignItems(.center)
+                        .backgroundColor(.color(.named(.white)))
+                        .color(.named(.black))
+                        .padding(.px(16))
+                        .margin(.px(0))
+                }
+            )
+            #expect(html.contains("<div"))
+            #expect(html.contains("display"))
+            #expect(html.contains("flex-direction"))
+            #expect(html.contains("justify-content"))
+            #expect(html.contains("align-items"))
+        }
 
-    @Test
-    func `StringProperty description returns value`() {
-        let prop = StringProperty("font-size", "16px")
-        #expect(prop.description == "16px")
-    }
+        @Test
+        func `css on content-bearing element preserves content`() throws {
+            let html = try String(
+                HTML.Document {
+                    tag("div") { tag("span") }.css
+                        .backgroundColor(.color(.named(.red)))
+                }
+            )
+            #expect(html.contains("<span"))
+            #expect(html.contains("<div"))
+        }
 
-    @Test
-    func `StringProperty declaration includes name and value`() {
-        let prop = StringProperty("font-size", "16px")
-        #expect(prop.declaration.description == "font-size:16px")
-    }
+        @Test
+        func `StringProperty description returns value`() {
+            let prop = StringProperty("font-size", "16px")
+            #expect(prop.description == "16px")
+        }
 
-    @Test
-    func `global StringProperty creates correct value`() {
-        let prop = StringProperty.global(.inherit)
-        #expect(prop.description == "inherit")
+        @Test
+        func `StringProperty declaration includes name and value`() {
+            let prop = StringProperty("font-size", "16px")
+            #expect(prop.declaration.description == "font-size:16px")
+        }
+
+        @Test
+        func `global StringProperty creates correct value`() {
+            let prop = StringProperty.global(.inherit)
+            #expect(prop.description == "inherit")
+        }
     }
 }
 
