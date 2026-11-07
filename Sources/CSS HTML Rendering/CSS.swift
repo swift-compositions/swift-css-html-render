@@ -9,11 +9,6 @@ extension HTML {
         public init(base: Base) {
             self.base = base
         }
-
-        @inlinable
-        public var body: Base {
-            base
-        }
     }
 }
 
@@ -113,5 +108,13 @@ extension HTML.View {
     @inlinable
     public var css: HTML.CSS<Self> {
         HTML.CSS(base: self)
+    }
+}
+
+extension HTML.CSS {
+
+    @inlinable
+    public var body: Base {
+        base
     }
 }

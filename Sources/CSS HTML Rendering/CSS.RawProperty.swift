@@ -6,6 +6,9 @@ public struct RawProperty<PropertyType: W3C_CSS_Shared.Property>: W3C_CSS_Shared
     public init(_ value: String) {
         self.value = value
     }
+}
+
+extension RawProperty {
 
     public static var property: String {
         PropertyType.property

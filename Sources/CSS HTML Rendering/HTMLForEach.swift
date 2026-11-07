@@ -10,6 +10,9 @@ public struct HTMLForEach<Content: HTML.View>: HTML.View {
     ) {
         self.content = HTML.Builder.buildArray(data.map(content))
     }
+}
+
+extension HTMLForEach {
 
     public var body: some HTML.View {
         content

@@ -6,6 +6,9 @@ public struct GlobalProperty<PropertyType: W3C_CSS_Shared.Property>: W3C_CSS_Sha
     public init(_ global: Global) {
         self.global = global
     }
+}
+
+extension GlobalProperty {
 
     public static var property: String {
         PropertyType.property
