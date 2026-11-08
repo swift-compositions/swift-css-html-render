@@ -1,6 +1,6 @@
 public import W3C_CSS_Shared
 
-public struct StringProperty: W3C_CSS_Shared.Property {
+public struct StringProperty: W3C_CSS_Shared::Property {
     public let name: String
     public let value: String
 

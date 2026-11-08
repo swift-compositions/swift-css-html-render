@@ -1,6 +1,6 @@
 public import W3C_CSS_Shared
 
-public struct GlobalProperty<PropertyType: W3C_CSS_Shared.Property>: W3C_CSS_Shared.Property {
+public struct GlobalProperty<PropertyType: W3C_CSS_Shared::Property>: W3C_CSS_Shared::Property {
     public let global: Global
 
     public init(_ global: Global) {

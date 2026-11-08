@@ -1,6 +1,6 @@
 public import W3C_CSS_Shared
 
-public struct RawProperty<PropertyType: W3C_CSS_Shared.Property>: W3C_CSS_Shared.Property {
+public struct RawProperty<PropertyType: W3C_CSS_Shared::Property>: W3C_CSS_Shared::Property {
     public let value: String
 
     public init(_ value: String) {
