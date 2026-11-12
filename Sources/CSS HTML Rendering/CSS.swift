@@ -27,12 +27,27 @@ public enum CSS {
             content
         }
 
-        @inlinable
-        public static func buildBlock<each Content>(
-            _ content: repeat each Content
-        ) -> Renderer.Document._Tuple<repeat each Content> {
-            Renderer.Document._Tuple(repeat each content)
-        }
+        #if !hasFeature(Embedded)
+            @inlinable
+            public static func buildBlock<each Content>(
+                _ content: repeat each Content
+            ) -> Renderer.Document._Tuple<repeat each Content> {
+                Renderer.Document._Tuple(repeat each content)
+            }
+        #else
+            @inlinable
+            public static func buildPartialBlock<Content>(first content: Content) -> Content {
+                content
+            }
+
+            @inlinable
+            public static func buildPartialBlock<Accumulated, Next>(
+                accumulated: Accumulated,
+                next: Next
+            ) -> Renderer.Document.Pair<Accumulated, Next> {
+                Renderer.Document.Pair(first: accumulated, second: next)
+            }
+        #endif
 
         @inlinable
         public static func buildEither<First, Second>(
