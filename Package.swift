@@ -21,13 +21,16 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main"),
         .package(url: "https://github.com/swift-standards/swift-css-standard.git", branch: "main"),
+        .package(url: "https://github.com/swift-w3c/swift-w3c-css.git", branch: "main"),
     ],
     targets: [
         .target(
             name: "CSS HTML Rendering",
             dependencies: [
                 .product(name: "HTML Rendering", package: "swift-html-render"),
+                .product(name: "HTML Rendering Core", package: "swift-html-render"),
                 .product(name: "CSS Standard", package: "swift-css-standard"),
+                .product(name: "W3C CSS Shared", package: "swift-w3c-css"),
             ]
         ),
         .target(
@@ -42,7 +45,8 @@ let package = Package(
         .testTarget(
             name: "CSS HTML Rendering Tests",
             dependencies: [
-                .target(name: "CSS HTML Rendering Test Support")
+                .target(name: "CSS HTML Rendering"),
+                .target(name: "CSS HTML Rendering Test Support"),
             ],
             path: "Tests/CSS HTML Rendering Tests"
         ),

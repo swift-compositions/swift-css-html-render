@@ -2245,8 +2245,8 @@ extension HTML.CSS {
     @discardableResult
     @_disfavoredOverload
     public func isolation(
-        _ isolation: W3C_CSS_Compositing.Isolation?
-    ) -> HTML.CSS<HTML.Styled<Base, W3C_CSS_Compositing.Isolation>> {
+        _ isolation: W3C.CSS.Compositing.Isolation?
+    ) -> HTML.CSS<HTML.Styled<Base, W3C.CSS.Compositing.Isolation>> {
         styled(isolation)
     }
 }
@@ -2863,8 +2863,8 @@ extension HTML.CSS {
     @discardableResult
     @_disfavoredOverload
     public func mixBlendMode(
-        _ mixBlendMode: W3C_CSS_Compositing.MixBlendMode?
-    ) -> HTML.CSS<HTML.Styled<Base, W3C_CSS_Compositing.MixBlendMode>> {
+        _ mixBlendMode: W3C.CSS.Compositing.MixBlendMode?
+    ) -> HTML.CSS<HTML.Styled<Base, W3C.CSS.Compositing.MixBlendMode>> {
         styled(mixBlendMode)
     }
 }
